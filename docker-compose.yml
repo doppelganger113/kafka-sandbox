@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  kafdrop:
+    image: "obsidiandynamics/kafdrop:latest"
+    container_name: kafdrop
+    environment:
+      KAFKA_BROKERCONNECT: "localhost:9092"
+    network_mode: "host"
