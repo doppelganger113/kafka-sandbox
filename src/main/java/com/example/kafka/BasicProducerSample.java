@@ -1,6 +1,5 @@
 package com.example.kafka;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.apache.kafka.clients.producer.*;
@@ -11,16 +10,26 @@ public final class BasicProducerSample {
         final String topic = "getting-started";
 
         final Map<String, Object> config = Map.of(
-                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
-                ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
-                ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
-                ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true
+            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:29092",
+            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
+            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName(),
+            ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true
         );
 
+//        final var config = new TypesafeProducerConfig()
+//            .withBootstrapServers(topic)
+//            .withKeySerializerClass(StringSerializer.class)
+//            .withValueSerializerClass(StringSerializer.class)
+//            .withCustomEntry(
+//                ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, 1
+//            )
+//            .mapify();
+
         try (var producer = new KafkaProducer<String, String>(config)) {
+            var counter = 0L;
             while (true) {
                 final String key = "myKey";
-                final String value = new Date().toString();
+                final String value = "Counter value: " + counter;
                 System.out.format("Publishing record with value: %s\n", value);
 
                 final Callback callback = (metadata, exception) -> {
@@ -28,7 +37,8 @@ public final class BasicProducerSample {
                 };
 
                 producer.send(new ProducerRecord<>(topic, key, value), callback);
-                Thread.sleep(1_000);
+                counter++;
+                Thread.sleep(5_000);
             }
         }
     }

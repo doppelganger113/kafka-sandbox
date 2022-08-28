@@ -1,5 +1,7 @@
 # Kafka sandbox
 
+Playground for testing out Kafka and Kafka streams with Java.
+
 ## Installation and setup
 
 Download Scala binaries and extract them, then add their path to `KAFKA_HOME` env variable.
@@ -11,20 +13,20 @@ and better yet, add to your `.bashrc` to be set every time on OS start.
 ## Starting
 
 1. Zookeeper
-```bash
-$KAFKA_HOME/bin/zookeeper-server-start.sh \
-$KAFKA_HOME/config/zookeeper.properties
-```
+    ```bash
+    $KAFKA_HOME/bin/zookeeper-server-start.sh \
+    $KAFKA_HOME/config/zookeeper.properties
+    ```
 2. Kafka
-```bash
-$KAFKA_HOME/bin/kafka-server-start.sh \
-$KAFKA_HOME/config/server.properties 
-```
+    ```bash
+    $KAFKA_HOME/bin/kafka-server-start.sh \
+    $KAFKA_HOME/config/server.properties 
+    ```
 3. Kafdrop
-```bash
-docker-compose up 
-```
-Now you can access the UI via http://localhost:9000/
+    ```bash
+    docker-compose up 
+    ```
+    Now you can access the UI via http://localhost:9000/
 
 ## Commands
 
